@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GR360 Importer</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 300px;
+      font-family: Inter, system-ui, sans-serif;
+      background: #0f1117;
+      color: #f0f0f0;
+    }
+
+    .header {
+      background: #1a1d27;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid #2a2d3a;
+    }
+
+    .header img {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      object-fit: contain;
+      background: #2a2d3a;
+    }
+
+    .header-text h1 {
+      font-size: 13px;
+      font-weight: 600;
+      color: #f0f0f0;
+    }
+
+    .header-text p {
+      font-size: 11px;
+      color: #888;
+    }
+
+    .content {
+      padding: 16px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      margin-bottom: 14px;
+      width: 100%;
+    }
+
+    .status-badge.on-listing {
+      background: #1a2a1a;
+      color: #4ade80;
+      border: 1px solid #2a4a2a;
+    }
+
+    .status-badge.not-listing {
+      background: #1a1a2a;
+      color: #888;
+      border: 1px solid #2a2a3a;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .dot.green { background: #4ade80; }
+    .dot.grey { background: #555; }
+
+    .btn-import {
+      width: 100%;
+      padding: 11px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-import:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .spinner {
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(0,0,0,0.3);
+      border-top-color: #000;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      display: none;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .hint {
+      font-size: 11px;
+      color: #666;
+      text-align: center;
+      margin-top: 10px;
+      line-height: 1.4;
+    }
+
+    .supported {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid #2a2d3a;
+    }
+
+    .supported p {
+      font-size: 11px;
+      color: #555;
+      margin-bottom: 6px;
+    }
+
+    .supported-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .tag {
+      font-size: 10px;
+      background: #1e2130;
+      color: #888;
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid #2a2d3a;
+    }
+
+    .error {
+      font-size: 12px;
+      color: #f87171;
+      background: #2a1a1a;
+      border: 1px solid #4a2a2a;
+      border-radius: 6px;
+      padding: 8px 10px;
+      margin-top: 10px;
+      display: none;
+    }
+
+    .success {
+      font-size: 12px;
+      color: #4ade80;
+      background: #1a2a1a;
+      border: 1px solid #2a4a2a;
+      border-radius: 6px;
+      padding: 8px 10px;
+      margin-top: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img id="logo" src="icons/icon48.png" alt="logo" />
+    <div class="header-text">
+      <h1 id="company-name">GR360 Importer</h1>
+      <p>Listing Import Tool</p>
+    </div>
+  </div>
+
+  <div class="content">
+    <div id="status-badge" class="status-badge not-listing">
+      <span class="dot grey" id="dot"></span>
+      <span id="status-text">Checking page...</span>
+    </div>
+
+    <button id="btn-import" class="btn-import" disabled>
+      <div class="spinner" id="spinner"></div>
+      <span id="btn-label">Import this Listing</span>
+    </button>
+
+    <div id="error" class="error"></div>
+    <div id="success" class="success"></div>
+
+    <p id="hint" class="hint">Navigate to a property listing page to import it.</p>
+
+    <div class="supported">
+      <p>Supported portals:</p>
+      <div id="supported-list" class="supported-list"></div>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
