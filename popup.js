@@ -42,17 +42,6 @@ function showSuccess(msg) {
 chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
   if (!tab) return;
 
-  const url = tab.url || "";
-  const isSupported = CONFIG.supportedDomains.some(d => url.includes(d));
-
-  if (!isSupported) {
-    $("status-badge").className = "status-badge not-listing";
-    $("dot").className = "dot grey";
-    $("status-text").textContent = "Not a supported portal";
-    $("hint").textContent = `Navigate to a listing on ${CONFIG.supportedDomains.join(", ")}`;
-    return;
-  }
-
   // Ask content script if this is a listing detail page
   chrome.tabs.sendMessage(tab.id, { type: "EXTRACT_LISTING" }, (response) => {
     if (chrome.runtime.lastError || !response) {

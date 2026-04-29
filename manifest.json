@@ -1,17 +1,11 @@
 {
   "manifest_version": 3,
   "name": "GR360 Listing Importer",
-  "version": "1.0.0",
-  "description": "Import property listings directly into your CRM with one click.",
+  "version": "1.2.0",
+  "description": "Import property listings into your CRM from any real estate website with one click.",
   "permissions": ["activeTab", "scripting", "storage", "tabs"],
   "host_permissions": [
-    "https://www.property24.com/*",
-    "https://www.privateproperty.co.za/*",
-    "https://www.pamgolding.co.za/*",
-    "https://www.seeff.com/*",
-    "https://crm.gardenroute360.co.za/*",
-    "https://*.lovable.app/*",
-    "https://*.vercel.app/*"
+    "<all_urls>"
   ],
   "action": {
     "default_popup": "popup.html",
@@ -23,12 +17,7 @@
   },
   "content_scripts": [
     {
-      "matches": [
-        "https://www.property24.com/*",
-        "https://www.privateproperty.co.za/*",
-        "https://www.pamgolding.co.za/*",
-        "https://www.seeff.com/*"
-      ],
+      "matches": ["<all_urls>"],
       "js": ["config.js", "content.js"],
       "run_at": "document_idle"
     }
